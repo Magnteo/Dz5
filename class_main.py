@@ -50,12 +50,15 @@ class Record:
         name, phone, *_ = args
         record = book.find(name)
         message = "Contact updated."
+
         if record is None:
             record = Record(name)
             book.add_record(record)
             message = "Contact added."
+
         if phone:
             record.add_phone(phone)
+
         return message
     def add_birthday(self, birthday):
         self.birthday = Birthday(birthday)
@@ -115,20 +118,21 @@ def add_birthday(args, book):
     name = args[0]
     birthday =args[1]
     record = book.find(name)
-    if record is not None:
-        record.add_birthday(birthday)
-        return "update"
-    return None
+    record.add_birthday(birthday)
+    return "update"
+
     
 @input_error
-def add_contacd(args, book: AddressBook):
+def store_contact(args, book: AddressBook):
     name, phone, *_ = args
     record = book.find(name)
     message = "Contact updated."
+
     if record is None:
         record = Record(name)
         book.add_record(record)
         message = "Contact added."
+
     if phone:
         record.add_phone(phone)
     return message
@@ -138,9 +142,7 @@ def add_contacd(args, book: AddressBook):
 def show_birthday(args, book):
     name = args[0]
     record = book.find(name)
-    if record is None:
-        return "Contact not found."
-    elif record.birthday :
+    if record.birthday :
         return record.birthday.value
     else:
         return None
@@ -156,19 +158,12 @@ def birthdays(args, book:AddressBook):
 
 @input_error
 def all(book:AddressBook):
-    if not book.data:
-        return"No contacts"
-    result=[]
-    for record in book.values():
-        result.append(str(record))
-    return "\n".join(result)
+    return str(book)
 
 @input_error
 def change(args,book:AddressBook):
     name, old_phone, new_phone = args
     record:Record = book.find(name)
-    if record is None:
-        return "Contact not found"
     record.edit_phone(old_phone,new_phone)
     return"Update"
 
@@ -176,6 +171,4 @@ def change(args,book:AddressBook):
 def phone(args , book):
     name = args[0]
     record:Record = book.find(name)
-    if record is None:
-        return "Contact not found"
     return ';'.join(phone.value for phone in record.phones)

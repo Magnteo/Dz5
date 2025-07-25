@@ -22,7 +22,7 @@ def main():
             print("How can I help you?")
 
         elif command == "add":
-            print(add_contacd(args,book))
+            print(store_contact(args,book))
 
         elif command == "change":
             print(change(args,book))
@@ -40,15 +40,7 @@ def main():
             print(show_birthday(args,book))
 
         elif command == "birthdays":
-            up=book.get_upcoming_birthdays()
-            if up:
-                for item in up:
-                    print(f"{item['name']} - {item['birthday']}")
-            else:
-                print("No upcoming birthdays")
-
-        else:
-            print("Invalid command.")
+            print(birthdays(args,book))
 
 
 if __name__ == "__main__":
